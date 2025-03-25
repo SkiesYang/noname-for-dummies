@@ -3745,6 +3745,11 @@ game.import("character", function () {
 			// diy
 			
 			// extra
+			"#1！5！1": "横眉蔑风雨，引弓狩天狼。",
+	        "#1！5！2": "一箭出，万军毙！",
+	        "#chiren1": "流不尽的英雄血，斩不尽的逆贼头！",
+	        "#chiren2": "长刀渴血，当饲英雄胆！",
+            "#shen_huangzhong:die": "箭雨曾蔽日，今夕却成绝响。",
 			"#wansha_new_simayi1": "连诛其族，剪其党羽，以夷后患！",
 			"#wansha_new_simayi2": "绝汝生死，断汝轮回！",
 			"#lianpo_new_simayi1": "能战当战，不能战当死尔！",

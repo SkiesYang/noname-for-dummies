@@ -8,7 +8,7 @@ game.import("character", function () {
 				sp_tianji: ["caoteng", "sunhao", "liuxie", "caoang", "hetaihou", "sunluyu", "ol_wangrong", "zuofen", "ol_bianfuren", "qinghegongzhu", "tengfanglan", "ruiji", "caoxiancaohua", "caoyu"],
 				sp_sibi: ["ol_lukai", "yangxiu", "guotu", "chenlin", "chengyu", "shixie", "fuwan", "wangyun", "zhugejin", "simalang", "maliang", "buzhi", "dongyun", "kanze", "sunqian", "xizhicai", "sunshao", "duxi", "jianggan", "ol_dengzhi", "ol_yangyi", "ol_dongzhao", "ol_chendeng", "jin_yanghu", "wangyan", "xiahouxuan", "quhuang", "zhanghua", "wangguan", "sunhong", "caoxi", "tianchou"],
 				sp_tianzhu: ["ol_liupi", "budugen", "ol_kebineng", "yadan", "liyi", "zhangyan", "niujin", "hejin", "hansui", "wutugu", "yanbaihu", "shamoke", "zhugedan", "huangzu", "gaogan", "tadun", "fanjiangzhangda", "ahuinan", "dongtuna", "ol_wenqin"],
-				sp_nvshi: ["ol_sunru", "ol_yuanji", "ol_dingshangwan", "lingju", "guanyinping", "zhangxingcai", "mayunlu", "dongbai", "zhaoxiang", "ol_zhangchangpu", "daxiaoqiao", "jin_guohuai", "ol_hujinding", "ol_luyusheng", "ol_liwan"],
+				sp_nvshi: ["ol_sunru", "ol_yuanji", "ol_dingshangwan", "lingju", "guanyinping", "zhangxingcai", "mayunlu", "dongbai", "ol_dongxie", "zhaoxiang", "ol_zhangchangpu", "daxiaoqiao", "jin_guohuai", "ol_hujinding", "ol_luyusheng", "ol_liwan"],
 				sp_shaowei: ["ol_pengyang", "simahui", "zhangbao", "zhanglu", "zhugeguo", "xujing", "zhangling", "huangchengyan", "zhangzhi", "lushi"],
 				sp_huben: ["wangkuang", "duanjiong", "liupan", "ol_mengda", "caohong", "xiahouba", "zhugeke", "zumao", "wenpin", "litong", "mazhong", "heqi", "quyi", "luzhi", "yuejin", "dingfeng", "wuyan", "ol_zhuling", "tianyu", "huojun", "zhaoyǎn", "dengzhong", "ol_furong", "macheng", "ol_zhangyì", "ol_zhujun", "maxiumatie", "luoxian", "ol_huban", "haopu", "ol_qianzhao", "caimao"],
 				sp_liesi: ["lvboshe", "mizhu", "weizi", "ol_liuba", "zhangshiping"],
@@ -191,6 +191,7 @@ game.import("character", function () {
 			caochun: ["male", "wei", 4, ["xinshanjia"]],
 
 			dongbai: ["female", "qun", 3, ["lianzhu", "xiahui"]],
+			ol_dongxie: ["female", "qun", "3/5", ["oljiaowei", "olbianyu","olfengyao"]],
 
 			zhaoxiang: ["female", "shu", 4, ["fanghun", "fuhan"]],
 			mazhong: ["male", "shu", 4, ["fuman"]],
@@ -359,6 +360,7 @@ game.import("character", function () {
 			litong: "字文达，小字万亿。江夏平春（今河南信阳）人，汝南太守。早年以游侠闻名于江汝，在率众补充曹操兵源有功拜为阳安都尉，其间不因私而忘公，不因其妻子的求请而过问执法者。后来在曹操讨伐马超时出阵挑战，死于马超枪下。",
 			mizhu: "原为徐州富商，后被徐州牧陶谦辟为别驾从事。陶谦病死后，奉其遗命迎接刘备。与其弟麋芳拒绝曹操的任命而跟随刘备，在刘备最潦倒之时给予刘备很大的帮助，使他重新振作。214年（建安十九年），刘备入主益州后，拜麋竺为安汉将军，地位在诸葛亮之上，为刘备手下众臣之最。吕蒙袭取荆州，麋芳举城投降，导致关羽兵败身亡，麋竺面缚请罪，刘备劝慰麋竺，对他待遇如初。",
 			dongbai: "东汉末年县君，陇西临洮（今甘肃省岷县）人，董卓之孙女。董卓当权时，遍封其宗族，其中孙女董白尚未及笄，被封为渭阳君。",
+			ol_dongxie: "董卓之女，牛辅之妻。在《三国群英传》中名为董宜，在电视剧《三国群英会之吕布与貂蝉》中名为董媛。",
 			zhaoxiang: "赵云与马云騄之女，赵统赵广之妹，关平之妻。",
 			heqi: "早年在平定山越的战争中立有大功，又讨平叛乱无数，身经百战，所向披靡，深受孙权器重。后来在与魏国的多次边境争斗中也屡立战功，官至后将军，并领徐州牧。",
 			dongyun: "大汉重臣，掌军中郎将董和之子。东汉末年，其父董和事刘璋为益州太守，刘备立太子时，允被选为洗马，后为黄门侍郎，延熙六年（公元243年）加辅国将军，延熙七年（公元244年）以侍中守尚书令，任大将军费祎的副手。",
@@ -740,6 +742,177 @@ game.import("character", function () {
 			},
 		},
 		skill: {
+			//董翓
+	oljiaowei: {
+		audio: 2,
+		trigger: { player: "useCard" },
+		filter(event, player) {
+			if (player.countCards("h") <= player.getHp()) return false;
+			return get.color(event.card) === "black" && game.hasPlayer(target => target.getHp() <= player.getHp());
+		},
+		logTarget(event, player) {
+			return game.filterPlayer(target => target.getHp() <= player.getHp()).sortBySeat();
+		},
+		forced: true,
+		content() {
+			trigger.directHit.addArray(event.targets);
+			game.log(event.targets, "不可响应", trigger.card);
+		},
+		ai: {
+			directHit_ai: true,
+			skillTagFilter(player, tag, arg) {
+				if (!arg?.card || get.color(arg.card) !== "black") return;
+				const filter = card => !ui.selected.cards.includes(card) || arg.card !== card || !arg.card?.cards?.includes(card);
+				if (player.countCards("h", filter) <= player.getHp()) return false;
+				return arg?.target && arg.target.getHp() <= player.getHp();
+			},
+		},
+		mod: {
+			ignoredHandcard(card, player) {
+				if (get.color(card) == "black") return true;
+			},
+			cardDiscardable(card, player, name) {
+				if (name == "phaseDiscard" && get.color(card) == "black") return false;
+			},
+			targetInRange(card, player, target) {
+				if (player.countCards("h") <= player.getHp()) return;
+				if (target.getHp() <= player.getHp() && get.color(card) == "black") return true;
+			},
+		},
+	},
+	olbianyu: {
+		audio: 2,
+		trigger: {
+			source: "damageSource",
+			player: "damageEnd",
+		},
+		filter(event, player) {
+			if (!event.card || event.card.name !== "sha") return false;
+			return event.player.isIn() && Math.min(event.player.getDamagedHp(), event.player.countCards("h")) > 0;
+		},
+		forced: true,
+		logTarget: "player",
+		async content(event, trigger, player) {
+			const target = trigger.player,
+				num = target.getDamagedHp();
+			const result = await player
+				.choosePlayerCard(target, true, "h", [1, num])
+				.set(
+					"prompt",
+					(() => {
+						return '###鞭御###<div class="text center">令' + get.translation(target) + "至多" + get.cnNumber(num) + "张手牌为无次数限制的【杀】</div>";
+					})()
+				)
+				.forResult();
+			if (result?.bool && result.cards?.length) {
+				target.addSkill("olbianyu_viewAs");
+				target.addGaintag(result.cards, "olbianyu_viewAs");
+				if ([player, target].some(current => current.getCards("h").every(card => get.name(card, current) == "sha"))) await player.draw(2);
+			}
+		},
+		subSkill: {
+			viewAs: {
+				mod: {
+					cardname(card) {
+						if (get.itemtype(card) === "card" && card.hasGaintag("olbianyu_viewAs")) return "sha";
+					},
+					cardnature(card) {
+						if (get.itemtype(card) === "card" && card.hasGaintag("olbianyu_viewAs")) return false;
+					},
+					cardUsable(card) {
+						if (card.name === "sha" && card.cards?.length === 1 && card.cards[0].hasGaintag("olbianyu_viewAs")) return Infinity;
+					},
+				},
+				charlotte: true,
+				onremove: (player, skill) => player.removeGaintag(skill),
+				trigger: { player: "useCard1" },
+				filterx(event, player) {
+					if (get.type(event.card) !== "basic") return true;
+					if (event.card.name !== "sha" || event.addCount === false) return false;
+					if (!event.cards || event.cards.length !== 1) return false;
+					return player.hasHistory("lose", evt => {
+						if (evt.getParent() !== event) return false;
+						return Object.keys(evt.gaintag_map).some(i => evt.gaintag_map[i].includes("olbianyu_viewAs"));
+					});
+				},
+				forced: true,
+				popup: false,
+				firstDo: true,
+				content() {
+					if (get.type(trigger.card) !== "basic") player.removeSkill(event.name);
+					else trigger.addCount = false;
+				},
+				mark: true,
+				intro: { content: "选择的牌视为无次数限制的【杀】直到使用非基本牌" },
+			},
+		},
+	},
+	olfengyao: {
+		audio: 2,
+		trigger: {
+			source: "damageBegin1",
+			global: ["loseAfter", "loseAsyncAfter", "gainAfter", "equipAfter", "addJudgeAfter", "addToExpansionAfter"],
+		},
+		filter(event, player) {
+			if (event.name === "damage") {
+				return [player, event.player].some(target => 
+					['e', 'j'].some(position =>  
+						target.getCards(position).some(card =>  
+							get.suit(card) === "spade" &&
+							lib.filter.cardDiscardable(card, player)
+						)
+					)
+				);
+			}
+	
+			if (player.isHealthy()) return false;
+			return game.hasPlayer(target => 
+				event.getl?.(target)?.es?.some(card => 
+					get.suit(card, target) === "spade"
+				)
+			);
+		},
+		async cost(event, trigger, player) {
+			if (trigger.name === "damage") {
+				const target = trigger.player;
+				const dialog = ['###凤瑶###<div class="text center">弃置你或' + get.translation(target) + "场上的一张黑桃牌，令此伤害+1</div>"];
+				for (const current of [player, target]) {
+					for (const pos of ["e", "j"]) {
+						const cards = current.getCards(pos).filter(card => 
+							get.suit(card) === "spade" && 
+							lib.filter.cardDiscardable(card, player)
+						);
+						if (cards.length) {
+							dialog.push('<div class="text center">' + (current === player ? "你" : get.translation(current)) + "的" + { e: "装备区", j: "判定区" }[pos] + "</div>");
+							dialog.push(cards);
+						}
+					}
+				}
+				event.result = await player
+					.chooseButton(dialog, true)
+					.set("ai", button => {
+						const player = get.player(),
+							card = button.link,
+							owner = get.owner(card);
+						return -get.attitude(player, owner) * get.value(card, owner);
+					})
+					.forResult();
+				event.result.cards = event.result.links;
+				event.result.targets = [target];
+			} else {
+				event.result = { bool: true };
+			}
+		},
+		async content(event, trigger, player) {
+			if (trigger.name === "damage") {
+				const owner = get.owner(event.cards[0]);
+				await owner.discard(event.cards).set("discarder", owner);
+				trigger.num++;
+			} else {
+				await player.recover();
+			}
+		},
+	},
 			//王匡
 			olrenxia: {
 				enable: "phaseUse",
@@ -31381,6 +31554,7 @@ game.import("character", function () {
 			kanze: ["kanze", "re_kanze"],
 			lvfan: ["lvfan", "sp_lvfan"],
 			dongbai: ["dongbai", "re_dongbai", "jsrg_dongbai"],
+			ol_dongxie: ["dongxie", "ol_dongxie"],
 			sp_jiaxu: ["sp_jiaxu", "dc_sp_jiaxu", "yj_jiaxu"],
 			buzhi: ["buzhi", "ty_buzhi"],
 		},
@@ -31525,6 +31699,8 @@ game.import("character", function () {
 			caochun: "曹纯",
 			dongbai: "OL董白",
 			dongbai_prefix: "OL",
+			ol_dongxie: "OL董翓",
+	        ol_dongxie_prefix: "OL",
 			zhaoxiang: "赵襄",
 			heqi: "贺齐",
 			kanze: "OL阚泽",

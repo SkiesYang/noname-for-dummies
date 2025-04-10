@@ -23,7 +23,7 @@ game.import("character", function () {
 			},
 		},
 		character: {
-			shen_huangzhong: ["male", "shen", 4, ["1！5！", "chiren"], ["shu"]],
+			shen_huangzhong: ["male", "shen", 4, ["dclieqiong", "dczhanjue"], ["shu"]],
 			new_simayi: ["male", "shen", 4, ["jilin", "yingyou", "yingtian"], ["wei"]],
 			xin_simayi: ["male", "shen", 4, ["xinrenjie", "xinbaiyin", "xinlianpo"], ["tempname:shen_simayi", "wei", "die_audio:shen_simayi"]],
 			dc_shen_huatuo: ["male", "shen", 3, ["jingyu", "lvxin", "huandao"], ["qun"]],
@@ -112,7 +112,7 @@ game.import("character", function () {
 			//神黄忠
 			//丁真神将，赤矢神将，爆头神将，吃人神将
 			// 扎针小游戏？
-			"1！5！": {
+			"dclieqiong": {
 				audio: 2,
 				trigger: { source: "damageSource" },
 				filter(event, player) {
@@ -124,11 +124,11 @@ game.import("character", function () {
 				prompt2: (event, player) => ("击伤其一个部位"),
 				async cost(event, trigger, player) {
 					const target = trigger.player;
-					const places = lib.skill["1！5！"].derivation
+					const places = lib.skill["dclieqiong"].derivation
 						.slice()
 						.filter(i => {
-							let storage = target.getStorage("1！5！_injury");
-							if (!storage.length && i == "1！5！_place1") {
+							let storage = target.getStorage("dclieqiong_injury");
+							if (!storage.length && i == "dclieqiong_place1") {
 								return false;
 							}
 							return true;
@@ -185,7 +185,7 @@ game.import("character", function () {
 						event.dialog = dialog;
 						
 						//白底大图不加textPrompt了
-						// dialog.textPrompt = dialog.add('<div class="text center">毅武：是否击伤' + get.translation(target) +'的一个部位？</div>');
+						// dialog.textPrompt = dialog.add('<div class="text center">裂穹：是否击伤' + get.translation(target) +'的一个部位？</div>');
 						
 						dialog.style.display = "flex";
 						dialog.style.justifyContent = "center";
@@ -193,7 +193,7 @@ game.import("character", function () {
 						dialog.style.position = "relative";
 						dialog.style.width = "100%";
 						dialog.style.height = "100%";
-						dialog.id = "1！5！";
+						dialog.id = "dclieqiong";
 						dialog.classList.add("fixed");
 						dialog.classList.add("scroll1");
 						dialog.classList.add("scroll2");
@@ -206,7 +206,7 @@ game.import("character", function () {
 						ui.arena.classList.add("choose-to-move");
 						
 						const target_img = document.createElement("div");
-						const position = lib.skill["1！5！"].derivation;
+						const position = lib.skill["dclieqiong"].derivation;
 						target_img.style.width = "50%";
 						target_img.style.height = "100%";
 						target_img.style.position = "relative";
@@ -283,7 +283,7 @@ game.import("character", function () {
 									a.target.style.backgroundImage = "url(" + lib.assetURL + "image/card/yiwu_click_chosen.png)";
 									if(event.control) event.control.close();
 									// 临时修改（by 棘手怀念摧毁）
-									// if (!lib.config.autoskilllist.includes("1！5！")) {
+									// if (!lib.config.autoskilllist.includes("dclieqiong")) {
 										// event.dialog.close();
 										// game.resume();
 										// _status.imchoosing = false;
@@ -338,9 +338,9 @@ game.import("character", function () {
 					const place = event.cost_data;
 					player.popup(place, "fire");
 					game.log(player, "击伤了", target, "的", "#y" + get.translation(place));
-					target.addTempSkill("1！5！_injury");
-					target.markAuto("1！5！_injury", [place]);
-					switch (parseInt(place.slice("1！5！_place".length))) {
+					target.addTempSkill("dclieqiong_injury");
+					target.markAuto("dclieqiong_injury", [place]);
+					switch (parseInt(place.slice("dclieqiong_place".length))) {
 						case 1:
 							if (target.getHp() > 0) {
 								await target.loseHp(target.getHp());
@@ -363,7 +363,7 @@ game.import("character", function () {
 							if (cards.length) await target.discard(cards).set("discarder", player);
 							break;
 						case 3:
-							target.addTempSkill("1！5！_maxhand", { player: "phaseEnd" });
+							target.addTempSkill("dclieqiong_maxhand", { player: "phaseEnd" });
 							break;
 						case 4:
 							const cardx = target.getDiscardableCards(target, "h");
@@ -371,20 +371,20 @@ game.import("character", function () {
 							if (cardx.length) await target.discard(cardx.randomGets(num));
 							break;
 						case 5:
-							target.addTempSkill("1！5！_damage", { player: "phaseEnd" });
+							target.addTempSkill("dclieqiong_damage", { player: "phaseEnd" });
 							break;
 						case 6:
-							target.addTempSkill("1！5！_use", { player: "phaseEnd" });
+							target.addTempSkill("dclieqiong_use", { player: "phaseEnd" });
 							break;
 						case 7:
-							target.addTempSkill("1！5！_respond", { player: "phaseEnd" });
+							target.addTempSkill("dclieqiong_respond", { player: "phaseEnd" });
 							break;
 					}
 				},
 				marktext: "赤",
 				intro: { content: "mark" },
 				frequent: true,
-				derivation: ["1！5！_place1", "1！5！_place4", "1！5！_place5", "1！5！_place6", "1！5！_place7"],
+				derivation: ["dclieqiong_place1", "dclieqiong_place4", "dclieqiong_place5", "dclieqiong_place6", "dclieqiong_place7"],
 				subSkill: {
 					injury: {
 						charlotte: true,
@@ -400,10 +400,10 @@ game.import("character", function () {
 						},
 						mod: {
 							maxHandcard(player, num) {
-								if (_status["1！5！_maxhand"]) return;
-								_status["1！5！_maxhand"] = true;
+								if (_status["dclieqiong_maxhand"]) return;
+								_status["dclieqiong_maxhand"] = true;
 								const numx = player.getHandcardLimit();
-								delete _status["1！5！_maxhand"];
+								delete _status["dclieqiong_maxhand"];
 								return num - Math.ceil(numx);
 							},
 						},
@@ -439,7 +439,7 @@ game.import("character", function () {
 						async content(event, trigger, player) {
 							trigger.all_excluded = true;
 							trigger.targets.length = 0;
-							player.removeSkill("1！5！_use");
+							player.removeSkill("dclieqiong_use");
 						}
 					},
 					respond: {
@@ -464,7 +464,7 @@ game.import("character", function () {
 					},
 				},
 			},
-			chiren: {
+			dczhanjue: {
 				audio: 2,
 				trigger:{
 					player: "phaseUseBegin",
@@ -515,10 +515,10 @@ game.import("character", function () {
 				async content(event, trigger, player) {
 					if (event.cost_data == "选项一") {
 						player.draw(player.getHp());
-						player.addTempSkill("chiren_directHit", {player:"phaseUseEnd"});
+						player.addTempSkill("dczhanjue_directHit", {player:"phaseUseEnd"});
 					} else {
 						player.draw(player.getDamagedHp());
-						player.addTempSkill("chiren_recover", {player:"phaseUseEnd"});
+						player.addTempSkill("dczhanjue_recover", {player:"phaseUseEnd"});
 					}
 				},
 				subSkill:{
@@ -11624,24 +11624,24 @@ game.import("character", function () {
 			yingtian_info: "觉醒技。一名角色死亡后，若场上势力数不大于2，则你获得〖鬼才〗、〖完杀〗、〖连破〗并失去〖英猷〗且你本局游戏使用牌没有距离限制。",
 			shen_huangzhong: "神黄忠",
 			shen_huangzhong_prefix: "神",
-			"1！5！": "毅武",
-			"1！5！_info": "当你对一名其他角色造成伤害后，你可以在任意部位中选择一个“击伤”；若你击伤了一名角色，则本回合再次击伤该角色时出现“头部”选项。",
-			"1！5！_place1": "头部",
-			"1！5！_place1_info": "令其失去所有体力，若其因此死亡，你增加1点体力上限。",
-			//"1！5！_place2": "肩部",
-			//"1！5！_place2_info": "令其弃置装备区里的武器牌和坐骑牌。",
-			//"1！5！_place3": "手部",
-			//"1！5！_place3_info": "令其手牌上限视为原来的一半（向下取整）直到其下个回合结束。",
-			"1！5！_place4": "上肢",
-			"1！5！_place4_info": "令其随机弃置一半手牌（向上取整）。",
-			"1！5！_place5": "下肢",
-			"1！5！_place5_info": "令其下一次受到的伤害+1直到其下个回合结束。",
-			"1！5！_place6": "胸部",
-			"1！5！_place6_info": "令其使用的下一张牌无效直到其回合结束。",
-			"1！5！_place7": "腹部",
-			"1！5！_place7_info": "令其不能使用或打出红桃牌直到其下个回合结束。",
-			chiren: "赤刃",
-			chiren_info: "出牌阶段开始时，你可以选择一项：1.摸体力值张牌，此阶段使用的下一张【杀】无距离限制且不能被响应。2.摸已损失体力值张牌，此阶段下一次造成伤害后，回复等量体力。",
+			"dclieqiong": "裂穹",
+			"dclieqiong_info": "当你对一名其他角色造成伤害后，你可以在任意部位中选择一个“击伤”；若你击伤了一名角色，则本回合再次击伤该角色时出现“头部”选项。",
+			"dclieqiong_place1": "头部",
+			"dclieqiong_place1_info": "令其失去所有体力，若其因此死亡，你增加1点体力上限。",
+			//"dclieqiong_place2": "肩部",
+			//"dclieqiong_place2_info": "令其弃置装备区里的武器牌和坐骑牌。",
+			//"dclieqiong_place3": "手部",
+			//"dclieqiong_place3_info": "令其手牌上限视为原来的一半（向下取整）直到其下个回合结束。",
+			"dclieqiong_place4": "上肢",
+			"dclieqiong_place4_info": "令其随机弃置一半手牌（向上取整）。",
+			"dclieqiong_place5": "下肢",
+			"dclieqiong_place5_info": "令其下一次受到的伤害+1直到其下个回合结束。",
+			"dclieqiong_place6": "胸部",
+			"dclieqiong_place6_info": "令其使用的下一张牌无效直到其回合结束。",
+			"dclieqiong_place7": "腹部",
+			"dclieqiong_place7_info": "令其不能使用或打出红桃牌直到其下个回合结束。",
+			dczhanjue: "斩决",
+			dczhanjue_info: "出牌阶段开始时，你可以选择一项：1.摸体力值张牌，此阶段使用的下一张【杀】无距离限制且不能被响应。2.摸已损失体力值张牌，此阶段下一次造成伤害后，回复等量体力。",
 
 			extra_feng: "神话再临·风",
 			extra_huo: "神话再临·火",
